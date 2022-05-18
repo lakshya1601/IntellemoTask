@@ -6,9 +6,12 @@
     font-size: 1rem;
     font-weight: bold;
     z-index: 9999999;
-  
     position: relative;
     top: 37px;
+}
+.buttonContainer{
+  display: flex;
+  justify-content: center;
 }
 .App-logo {
   height: 40vmin;

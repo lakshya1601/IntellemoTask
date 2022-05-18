@@ -3,7 +3,7 @@ import React, { useMemo, useRef } from 'react';
 import { useEffect, useState } from 'react';
 import { Image } from 'react-konva';
 
-const VideoCanvas = ({ src }) => {
+const VideoCanvas = ({ src,state }) => {
 
     const imageRef = useRef(null);
     const [size, setSize] = useState({ width: 50, height: 50 });
@@ -30,26 +30,34 @@ const VideoCanvas = ({ src }) => {
     }, [videoElement]);
   
 
+  
     useEffect(() => {
-      videoElement.play();
-      const layer = imageRef.current.getLayer();
+      if(state==="play"){
+        videoElement.play();
+        const layer = imageRef.current.getLayer();
+    
+        const anim = new Konva.Animation(() => {}, layer);
+        anim.start();
+      }
+    
   
-      const anim = new Konva.Animation(() => {}, layer);
-      anim.start();
+      if(state==="pause"){
   
+        videoElement.pause()
+      }
       return () => {
-        anim.stop()
+       
         videoElement.pause()
       };
-    }, [videoElement]);
+    }, [videoElement,state]);
   
     return (
       <Image
         ref={imageRef}
         image={videoElement}
-        x={20}
-        y={20}
-        stroke="red"
+        x={80}
+        y={80}
+        stroke="grey"
         width={size.width}
         height={size.height}
         // draggable
